@@ -1,4 +1,4 @@
-import User from "../models/user";
+import User from "../models/user.js";
 
 //Middleware to protect route
 export const protectRoute = async (req, res, next)=>{

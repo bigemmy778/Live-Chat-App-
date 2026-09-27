@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext'
 
 const LoginPage = () => {
 
@@ -10,6 +11,8 @@ const LoginPage = () => {
   const [bio, setBio] = useState("")
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
 
+  const {login} = useContext(AuthContext)
+
   const onSubmitHandler = (event)=>{
      event.preventDefault();
 
@@ -17,6 +20,9 @@ const LoginPage = () => {
         setIsDataSubmitted(true)
         return;   
      }
+
+
+     login(currentState === 'Sign up' ? 'signup' : "login", {fullName, email, password, bio})
   }
 
   return (
@@ -27,7 +33,7 @@ const LoginPage = () => {
       <img src={assets.logo_big} className='w-[min(30vw,250px)]' alt="" />
 
       {/* right */}
-      <form onClick={onSubmitHandler} className='border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col 
+      <form onSubmit={onSubmitHandler} className='border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col 
        gap-6 rounded-lg shadow-lg'>
         <h2 className='font-medium text-2xl flex justify-between items-center'>
           {currentState}
