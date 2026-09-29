@@ -7,8 +7,9 @@ export const connectDB = async () => {
         // mongoose.connect.on('connected', ()=> console.log('Database Connected'));
         mongoose.connection.on('connected', () => console.log('Database Connected'));
         await mongoose.connect(`${process.env.MONGODB_URI}/F-ping`)
-    } catch (error) {
-        console.log(error);
         
+    } catch (error) {
+        console.log("MongoDB connection error:", error.message);
+        process.exit(1);
     }
 }

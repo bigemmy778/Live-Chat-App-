@@ -1,5 +1,5 @@
-import express from 'express'
 import "dotenv/config"
+import express from 'express'
 import http from 'http'
 import cors from 'cors'
 import { connectDB } from "./lib/db.js";
@@ -37,7 +37,7 @@ io.on("connection",(socket)=>{
 })
 
 // Middleware setup
-app.use(express.json({ limit: '4mb' }));
+app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 
 
