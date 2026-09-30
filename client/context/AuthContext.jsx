@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     // we will store the user data in the authUser
 
     const[authUser, setAuthUser] = useState(null);
-    const[onlineUser, setOnlineUser] = useState([]);
+    const[onlineUsers, setOnlineUsers] = useState([]);
     const[socket, setSocket] = useState(null);
 
 
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
         setSocket(newSocket);
 
         newSocket.on("getOnlineUsers", (userIds) => {
-            setOnlineUser(userIds);
+            setOnlineUsers(userIds);
         })
     }
 
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }) => {
     const value = {
         axios,
         authUser,
-        onlineUser,
+        onlineUsers,
         socket,
         login,
         logout,
