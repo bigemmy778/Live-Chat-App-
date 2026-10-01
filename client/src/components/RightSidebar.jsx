@@ -26,7 +26,8 @@ const RightSidebar = () => {
             ></div>
 
             {/* panel - full width on mobile, fixed width on larger screens */}
-            <div className='relative bg-[#8185B2]/10 backdrop-blur-xl text-white w-full sm:w-[320px] h-full overflow-y-scroll'>
+            <div className='relative bg-[#18182b]/60 backdrop-blur-xl text-white w-full sm:w-[320px] h-full overflow-y-scroll shadow-2xl border-l border-white/10'>
+            {/* <div className='relative bg-[#8185B2]/10 backdrop-blur-xl text-white w-full sm:w-[320px] h-full overflow-y-scroll'> */}
                 {/* close button */}
                 <button
                     onClick={() => setShowRightBar(false)}
@@ -50,8 +51,41 @@ const RightSidebar = () => {
 
                 <hr className='border-[#ffffff50] my-4' />
 
-                {/* shared media - all images exchanged in this chat */}
-                <div className='px-5 text-xs'>
+            {/* shared media - all images exchanged in this chat */}
+                
+            {msgImages.length > 0 && (
+              <div className='px-5 mt-6'>
+                  <div className='flex items-center justify-between mb-3'>
+                      <p className='text-sm font-medium text-white'>
+                          Media
+                      </p>
+
+                  <span className='text-xs text-gray-400'>
+                      {msgImages.length} {msgImages.length === 1 ? 'image' : 'images'}
+                  </span>
+              </div>
+
+        <div className='bg-white/5 border border-white/10 rounded-xl p-3'>
+            <div className='grid grid-cols-2 gap-3'>
+                {msgImages.map((url, index) => (
+                    <div
+                        key={index}
+                        onClick={() => window.open(url)}
+                        className='group cursor-pointer overflow-hidden rounded-lg border border-white/10'
+                    >
+                        <img
+                            src={url}
+                            className='w-full h-28 object-cover transition-transform duration-300 group-hover:scale-105'
+                            alt=''
+                        />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+)}
+                
+                {/* <div className='px-5 text-xs'>
                     <p>Media</p>
                     <div className='mt-2 max-h-[200px] overflow-y-scroll grid grid-cols-2 gap-4 opacity-80'>
                         {msgImages.map((url, index) => (
@@ -62,7 +96,7 @@ const RightSidebar = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
 
                 <button onClick={() => logout()} className='absolute bottom-5 left-1/2 transform -translate-x-1/2
                  bg-gradient-to-r from-purple-400 to-violet-600 text-white border-none
