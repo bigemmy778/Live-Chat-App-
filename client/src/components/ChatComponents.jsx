@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 
 const ChatComponents = () => {
 
-  const { messages, selectedUser, setSelectedUser, sendMessage, getMessages } = useContext(ChatContext)
+  const { messages, selectedUser, setSelectedUser, sendMessage, getMessages, setShowRightBar } = useContext(ChatContext)
   const { authUser, onlineUsers } = useContext(AuthContext)
 
   const scrollEnd = useRef()
@@ -55,7 +55,8 @@ const ChatComponents = () => {
     <div className='h-full overflow-scroll relative backdrop-blur-lg'>
       {/* ----- header -----  */}
       <div className='flex items-center gap-3 py-3 mx-4 border-b border-stone-500'>
-        <img src={selectedUser.profilePic || assets.avatar_icon} alt="" className='w-8 aspect-[1/1] rounded-full object-cover' />
+        <img  onClick={() => setShowRightBar(true)}
+        src={selectedUser.profilePic || assets.avatar_icon} alt="" className='w-8 aspect-[1/1] rounded-full object-cover' />
         <p className='flex-1 text-lg text-white flex items-center gap-2'>
           {selectedUser.fullName}
           {/* {onlineUsers.includes(selectedUser._id)} 
