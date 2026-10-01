@@ -8,6 +8,7 @@ const RightSidebar = () => {
     const { selectedUser, messages, showRightBar, setShowRightBar } = useContext(ChatContext)
     const { logout, onlineUsers } = useContext(AuthContext)
     const [msgImages, setMsgImages] = useState([])
+    const [showProfilePic, setShowProfilePic] = useState(false)
 
     // whenever messages change, pull out just the image messages for the Media section
     useEffect(() => {
@@ -38,8 +39,12 @@ const RightSidebar = () => {
 
                 {/* profile info */}
                 <div className='pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto'>
-                    <img src={selectedUser?.profilePic || assets.avatar_icon} alt=""
-                        className='w-20 aspect-[1/1] rounded-full' />
+               <img
+                onClick={() => setShowProfilePic(true)}
+                src={selectedUser?.profilePic || assets.avatar_icon}
+                alt=""
+                className='w-20 h-20 rounded-full object-cover cursor-pointer'
+                />
                     <h1 className='px-10 text-xl font-medium mx-auto flex items-center gap-2'>
                         {/* green dot only shows if this user is currently online */}
                         {onlineUsers.includes(selectedUser._id) &&
@@ -104,6 +109,27 @@ const RightSidebar = () => {
                     Logout
                 </button>
             </div>
+
+            {showProfilePic && (
+            <div
+                onClick={() => setShowProfilePic(false)}
+                className='fixed inset-0 z-50 bg-black/90 flex items-center justify-center'
+            >
+                <button
+                    onClick={() => setShowProfilePic(false)}
+                    className='absolute top-5 right-6 text-white text-4xl cursor-pointer'
+                >
+                    ×
+                </button>
+
+                <img
+                    src={selectedUser?.profilePic || assets.avatar_icon}
+                    alt=""
+                    onClick={(e) => e.stopPropagation()}
+                    className='max-w-[90%] max-h-[85%] object-contain rounded-lg'
+                />
+            </div>
+        )}
         </div>
     )
 }
