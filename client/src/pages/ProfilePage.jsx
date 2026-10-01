@@ -2,10 +2,13 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
 import { AuthContext } from '../../context/AuthContext'
+import { ChatContext } from '../../context/ChatContext'
+import { Image } from 'lucide-react'
 
 function ProfilePage() {
 
   const { authUser, updateProfile } = useContext(AuthContext)
+  const { selectedImage, setSelectedImage } = useContext(ChatContext)
 
   const [isSubmitting, setIsSubmitting] = useState(false) // disable button after first click to let request process
   const [selectedImg, setSelectedImg] = useState(null)
@@ -40,9 +43,7 @@ function ProfilePage() {
       <div className='relative w-5/6 max-w-2xl backdrop-blur-2xl text-2xl text-gray-300 border-2
         border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg
       '>
-        {/* <div className='w-5/6 max-w-2xl backdrop-blur-2xl text-2xl text-gray-300 border-2
-        border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg
-       '> */}
+
 
         <button
           type='button'
@@ -56,8 +57,19 @@ function ProfilePage() {
           <h3 className='text-lg'>Profile details</h3>
           <label htmlFor='avatar' className='flex items-center gap-3 cursor-pointer'>
             <input onChange={(e) => setSelectedImg(e.target.files[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden />
-            <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} alt="" className={`w-12 h-12 ${selectedImg && 'rounded-full'}`} />
-            upload profile image
+            {selectedImg ? (
+              <img
+                src={URL.createObjectURL(selectedImg)}
+                alt=""
+                className='w-12 h-12 rounded-full object-cover'
+              />
+            ) : (
+              <div className='w-12 h-12 rounded-full border border-gray-500 flex items-center justify-center'>
+                <Image className='w-6 h-6 text-white' />
+              </div>
+            )}
+
+            <span>upload profile image</span>
           </label>
 
           <input onChange={(e) => setName(e.target.value)} value={name}
@@ -77,10 +89,32 @@ function ProfilePage() {
             {isSubmitting ? "Saving..." : "Save"}
           </button>
         </form>
-        <img className={`max-w-44 aspect-square rounded-full mx-10 ax-sm:mt-10 ${selectedImg && 'rounded-full'}`}
+        <img onClick={() => setSelectedImage(authUser.profilePic || assets.avatar_icon)}
+          className={`max-w-44 aspect-square rounded-full mx-10 ax-sm:mt-10 ${selectedImg && 'rounded-full'}`}
           src={authUser?.profilePic || assets.logo_icon}
           alt='' />
       </div>
+
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          className='fixed inset-0 z-50 bg-black/90 flex items-center justify-center'
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            className='absolute top-5 right-6 text-white text-4xl cursor-pointer'
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedImage}
+            alt=''
+            onClick={(e) => e.stopPropagation()}
+            className='max-w-[90%] max-h-[85%] object-contain rounded-lg'
+          />
+        </div>
+      )}
     </div>
   )
 }

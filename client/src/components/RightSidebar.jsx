@@ -5,7 +5,7 @@ import { AuthContext } from '../../context/AuthContext'
 
 const RightSidebar = () => {
 
-    const { selectedUser, messages, showRightBar, setShowRightBar } = useContext(ChatContext)
+    const { selectedUser, messages, showRightBar, setShowRightBar,setSelectedImage, selectedImage } = useContext(ChatContext)
     const { logout, onlineUsers } = useContext(AuthContext)
     const [msgImages, setMsgImages] = useState([])
     const [showProfilePic, setShowProfilePic] = useState(false)
@@ -75,7 +75,7 @@ const RightSidebar = () => {
                 {msgImages.map((url, index) => (
                     <div
                         key={index}
-                        onClick={() => window.open(url)}
+                        onClick={() => setSelectedImage(url)}
                         className='group cursor-pointer overflow-hidden rounded-lg border border-white/10'
                     >
                         <img
@@ -110,6 +110,29 @@ const RightSidebar = () => {
                 </button>
             </div>
 
+
+            {selectedImage && (
+            <div
+                onClick={() => setSelectedImage(null)}
+                className='fixed inset-0 z-50 bg-black/90 flex items-center justify-center'
+            >
+                <button
+                    onClick={() => setSelectedImage(null)}
+                    className='absolute top-5 right-6 text-white text-4xl cursor-pointer'
+                >
+                    ×
+                </button>
+
+                <img
+                    src={selectedImage}
+                    alt=""
+                    onClick={(e) => e.stopPropagation()}
+                    className='max-w-[90%] max-h-[85%] object-contain rounded-lg'
+                />
+            </div>
+        )}
+
+           {/* display profile pic big */}
             {showProfilePic && (
             <div
                 onClick={() => setShowProfilePic(false)}

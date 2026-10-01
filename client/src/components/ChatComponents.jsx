@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 
 const ChatComponents = () => {
 
-  const { messages, selectedUser, setSelectedUser, sendMessage, getMessages, setShowRightBar } = useContext(ChatContext)
+  const { messages, selectedUser, setSelectedUser, sendMessage, getMessages, setShowRightBar, selectedImage, setSelectedImage } = useContext(ChatContext)
   const { authUser, onlineUsers } = useContext(AuthContext)
 
   const scrollEnd = useRef()
@@ -55,8 +55,8 @@ const ChatComponents = () => {
     <div className='h-full overflow-scroll relative backdrop-blur-lg'>
       {/* ----- header -----  */}
       <div className='flex items-center gap-3 py-3 mx-4 border-b border-stone-500'>
-        <img  onClick={() => setShowRightBar(true)}
-        src={selectedUser.profilePic || assets.avatar_icon} alt="" className='w-8 aspect-[1/1] rounded-full object-cover' />
+        <img onClick={() => setShowRightBar(true)}
+          src={selectedUser.profilePic || assets.avatar_icon} alt="" className='w-8 aspect-[1/1] rounded-full object-cover' />
         <p className='flex-1 text-lg text-white flex items-center gap-2'>
           {selectedUser.fullName}
           {/* {onlineUsers.includes(selectedUser._id)} 
@@ -80,7 +80,8 @@ const ChatComponents = () => {
         {messages.map((msg, index) => (
           <div key={index} className={`flex items-end gap-2 justify-end ${msg.senderId !== authUser._id && 'flex-row-reverse'}`}>
             {msg.image ? (
-              <img className='max-w-[230px] border border-gray-700 rounded-lg overflow-hidden mb-8'
+              <img onClick={() => setSelectedImage(msg.image)}
+                className='max-w-[230px] border border-gray-700 rounded-lg overflow-hidden mb-8 cursor-pointer'
                 src={msg.image} alt='' />
             ) : (
               <p className={`p-2 max-w-[200px] md:text-sm font-light
@@ -101,13 +102,8 @@ const ChatComponents = () => {
                     : selectedUser?.profilePic || assets.avatar_icon
                 }
                 alt=""
-               
+
               />
-              {/* <img
-                src={msg.senderId === authUser._id ? authUser._id?.profilePic ||
-                  assets.avatar_icon : selectedUser?.profilePic || assets.avatar_icon}
-                alt="" className='w-7 rounded-full'
-              /> */}
               <p className='text-gray-500'>{formatMessageTime(msg.createdAt)}</p>
             </div>
           </div>
@@ -127,13 +123,33 @@ const ChatComponents = () => {
         </div>
         <img onClick={handleSendMessage} src={assets.send_button} alt="" className='w-7 cursor-pointer' />
       </div>
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          className='fixed inset-0 z-50 bg-black/90 flex items-center justify-center'
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            className='absolute top-5 right-6 text-white text-4xl cursor-pointer'
+          >
+            ×
+          </button>
 
+          <img
+            src={selectedImage}
+            alt=''
+            onClick={(e) => e.stopPropagation()}
+            className='max-w-[90%] max-h-[85%] object-contain rounded-lg'
+          />
+        </div>
+      )}
     </div>
   ) : (
     <div className='flex flex-col items-center justify-center gap-2 text-gray-500
       bg-white/10 max-md:hidden'>
       <img src={assets.logo_icon} className='max-w-16' alt="" />
       <p className='text-lg font-medium text-white'> Chat anytime, anywhere</p>
+
     </div>
   )
 }
