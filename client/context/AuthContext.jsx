@@ -86,7 +86,9 @@ export const AuthProvider = ({ children }) => {
 
     //Connect socket function to handle socket connection and online users updates
     const connectSocket = (userData) => {
-        if (!userData || socket?.connected) return;
+        if (!userData) return;
+        if (socket) socket.disconnect(); // clean up any existing connection first
+        // if (!userData || socket?.connected) return;
         const newSocket = io(backendUrl, {
             query: {
                 userId: userData._id,

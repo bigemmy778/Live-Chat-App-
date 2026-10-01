@@ -34,7 +34,7 @@ const ChatComponents = () => {
     reader.onloadend = async () => {
       await sendMessage({ image: reader.result })
     }
-    reader.readAsDataURL( file )
+    reader.readAsDataURL(file)
 
   }
 
@@ -55,7 +55,7 @@ const ChatComponents = () => {
     <div className='h-full overflow-scroll relative backdrop-blur-lg'>
       {/* ----- header -----  */}
       <div className='flex items-center gap-3 py-3 mx-4 border-b border-stone-500'>
-        <img src={selectedUser.profilePic || assets.avatar_icon} alt=""className='w-8 aspect-[1/1] rounded-full object-cover'/>
+        <img src={selectedUser.profilePic || assets.avatar_icon} alt="" className='w-8 aspect-[1/1] rounded-full object-cover' />
         <p className='flex-1 text-lg text-white flex items-center gap-2'>
           {selectedUser.fullName}
           {/* {onlineUsers.includes(selectedUser._id)} 
@@ -67,7 +67,12 @@ const ChatComponents = () => {
         </p>
         <img onClick={() => setSelectedUser(null)} src={assets.arrow_icon} alt=""
           className='md:hidden max-w-7' />
-        <img src={assets.help_icon} alt='' className='max-md:hidden max-w-5' />
+        <button
+          onClick={() => setSelectedUser(null)}
+          className='max-md:hidden text-white text-2xl leading-none hover:text-gray-300 cursor-pointer'
+        >
+          ×
+        </button>
       </div>
       {/* ----- chat area -----  */}
       <div className='flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6'>

@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import { Toaster } from "react-hot-toast"
+import assets from './assets/assets'
 import { AuthContext } from '../context/AuthContext.jsx'
 
 const App = () => {
@@ -11,7 +12,8 @@ const App = () => {
   const { authUser } = useContext(AuthContext)
 
   return (
-    <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain">
+    <div className="bg-contain" style={{ backgroundImage: `url(${assets.bgImage})` }}>
+    {/* // <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain"> */}
       <Toaster />
       <Routes>
         {/* // user can only see home page when they are authenticated */}
