@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import ChatComponents from '../components/ChatComponents'
 import RightSidebar from '../components/RightSidebar'
+import { ChatContext } from '../../context/ChatContext'
 
 const HomePage = () => {
-    const [selectedUser, setSelectedUser] = useState(false)
+    // const [selectedUser, setSelectedUser] = useState(false)
+
+    const {selectedUser} = useContext(ChatContext)
+
 
     return (
         <div className="border w-full h-screen sm:px-[15%] sm:py-[5%]">
@@ -13,7 +17,7 @@ const HomePage = () => {
                 overflow-hidden h-[100%] grid grid-cols-1 relative ${selectedUser ? 'md:grid-cols-[1fr_1.5fr_1fr] xl:grid-cols-[1fr_2fr_1fr]': 'md:grid-cols-2' }`}>
                 <Sidebar />
                 <ChatComponents  />
-                <RightSidebar selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
+                <RightSidebar />
             </div>
         </div>
     )
