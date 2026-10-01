@@ -37,9 +37,21 @@ function ProfilePage() {
 
   return (
     <div className='min-h-screen bg-cover bg-no-repeat flex items-center justify-center'>
-      <div className='w-5/6 max-w-2xl backdrop-blur-2xl text-2xl text-gray-300 border-2
+      <div className='relative w-5/6 max-w-2xl backdrop-blur-2xl text-2xl text-gray-300 border-2
         border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg
-       '>
+      '>
+        {/* <div className='w-5/6 max-w-2xl backdrop-blur-2xl text-2xl text-gray-300 border-2
+        border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg
+       '> */}
+
+        <button
+          type='button'
+          onClick={() => navigate('/')}
+          className='absolute top-4 right-5 text-white text-3xl leading-none
+          hover:text-gray-400 cursor-pointer'
+        >
+          ×
+        </button>
         <form onSubmit={handleSubmit} className='flex flex-col gap-5 p-10 flex-1'>
           <h3 className='text-lg'>Profile details</h3>
           <label htmlFor='avatar' className='flex items-center gap-3 cursor-pointer'>
@@ -65,9 +77,9 @@ function ProfilePage() {
             {isSubmitting ? "Saving..." : "Save"}
           </button>
         </form>
-        <img className={`max-w-44 aspect-square rounded-full mx-10 ax-sm:mt-10 ${selectedImg && 'rounded-full'}`} 
-        src={authUser?.profilePic || assets.logo_icon}
-        alt='' />
+        <img className={`max-w-44 aspect-square rounded-full mx-10 ax-sm:mt-10 ${selectedImg && 'rounded-full'}`}
+          src={authUser?.profilePic || assets.logo_icon}
+          alt='' />
       </div>
     </div>
   )
